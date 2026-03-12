@@ -2,7 +2,20 @@ package com.candyy.bookweb.services;
 
 import com.candyy.bookweb.entities.BookEntity;
 
+import java.util.List;
+import java.util.Optional;
+
 public interface BookService {
 
-    BookEntity createBook(String isbn, BookEntity bookEntity);
+    BookEntity save(String isbn, BookEntity bookEntity);
+
+    List<BookEntity> findAll();
+
+    Optional<BookEntity> findOne(String isbn);
+
+    boolean exists(String isbn);
+
+    BookEntity partialUpdate(String isbn, BookEntity bookEntity);
+
+    void delete(String isbn);
 }
