@@ -28,11 +28,11 @@ public class BookController {
             @PathVariable("isbn") final String isbn,
             @RequestBody final BookDTO bookDTO
     ) {
-        BookEntity bookEntity = bookMapper.mapFrom(bookDTO);
+        BookEntity book = bookMapper.mapFrom(bookDTO);
 
         boolean bookExists = bookService.exists(isbn);
 
-        BookEntity savedBook = bookService.save(isbn, bookEntity);
+        BookEntity savedBook = bookService.save(isbn, book);
         BookDTO savedBookDTO = bookMapper.mapTo(savedBook);
 
         if(!bookExists) {
@@ -68,8 +68,8 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        BookEntity bookEntity = bookMapper.mapFrom(bookDTO);
-        BookEntity savedBook = bookService.partialUpdate(isbn, bookEntity);
+        BookEntity book = bookMapper.mapFrom(bookDTO);
+        BookEntity savedBook = bookService.partialUpdate(isbn, book);
 
         BookDTO savedBookDTO = bookMapper.mapTo(savedBook);
 

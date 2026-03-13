@@ -33,10 +33,10 @@ public class AuthorController {
 
     @PostMapping(path = "/authors")
     public ResponseEntity<AuthorDTO> createAuthor(@RequestBody final AuthorDTO authorDTO) {
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDTO);
-        AuthorEntity savedAuthorEntity = authorService.save(authorEntity.getId(), authorEntity);
+        AuthorEntity author = authorMapper.mapFrom(authorDTO);
+        AuthorEntity savedAuthor = authorService.save(author.getId(), author);
 
-        return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
+        return new ResponseEntity<>(authorMapper.mapTo(savedAuthor), HttpStatus.CREATED);
     }
 
     @GetMapping(path = "/authors")
@@ -66,9 +66,9 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDTO);
+        AuthorEntity author = authorMapper.mapFrom(authorDTO);
 
-        AuthorEntity savedAuthor = authorService.save(id, authorEntity);
+        AuthorEntity savedAuthor = authorService.save(id, author);
         AuthorDTO savedAuthorDTO = authorMapper.mapTo(savedAuthor);
 
         return new ResponseEntity<>(savedAuthorDTO, HttpStatus.OK);
@@ -83,8 +83,8 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        AuthorEntity authorEntity = authorMapper.mapFrom(authorDTO);
-        AuthorEntity savedAuthor = authorService.partialUpdate(id, authorEntity);
+        AuthorEntity author = authorMapper.mapFrom(authorDTO);
+        AuthorEntity savedAuthor = authorService.partialUpdate(id, author);
 
         AuthorDTO savedAuthorDTO = authorMapper.mapTo(savedAuthor);
 
