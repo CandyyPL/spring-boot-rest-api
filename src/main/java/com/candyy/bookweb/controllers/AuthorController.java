@@ -2,8 +2,10 @@ package com.candyy.bookweb.controllers;
 
 import com.candyy.bookweb.entities.AuthorEntity;
 import com.candyy.bookweb.dto.AuthorDTO;
+import com.candyy.bookweb.entities.BookEntity;
 import com.candyy.bookweb.mappers.Mapper;
 import com.candyy.bookweb.services.AuthorService;
+import com.candyy.bookweb.services.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +19,16 @@ public class AuthorController {
 
     private final AuthorService authorService;
     private final Mapper<AuthorEntity, AuthorDTO> authorMapper;
+    private final BookService bookService;
 
-    public AuthorController(AuthorService authorService, Mapper<AuthorEntity, AuthorDTO> authorMapper) {
+    public AuthorController(
+            AuthorService authorService,
+            Mapper<AuthorEntity, AuthorDTO> authorMapper,
+            BookService bookService
+    ) {
         this.authorService = authorService;
         this.authorMapper = authorMapper;
+        this.bookService = bookService;
     }
 
     @PostMapping(path = "/authors")
@@ -89,8 +97,14 @@ public class AuthorController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        authorService.delete(id);
+        List<BookEntity> authorBooks = bookService.findByAuthorId(id);
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if(authorBooks.isEmpty()) {
+            authorService.delete(id);
+
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

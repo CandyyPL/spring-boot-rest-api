@@ -4,6 +4,7 @@ import com.candyy.bookweb.dto.AuthorDTO;
 import com.candyy.bookweb.entities.AuthorEntity;
 import com.candyy.bookweb.repositories.AuthorRepository;
 import com.candyy.bookweb.services.AuthorService;
+import com.candyy.bookweb.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

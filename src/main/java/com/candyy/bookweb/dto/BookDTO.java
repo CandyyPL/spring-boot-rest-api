@@ -15,5 +15,5 @@ public class BookDTO {
 
     private String title;
 
-    private AuthorDTO authorEntity;
+    private Integer author_id;
 }

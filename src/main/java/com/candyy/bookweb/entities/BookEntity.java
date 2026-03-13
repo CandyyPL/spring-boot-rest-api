@@ -1,5 +1,6 @@
 package com.candyy.bookweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class BookEntity {
 
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
-    private AuthorEntity authorEntity;
+    @JsonProperty("author_id")
+    private Integer authorId;
 }

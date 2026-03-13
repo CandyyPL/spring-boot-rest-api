@@ -36,6 +36,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<BookEntity> findByAuthorId(Integer authorId) {
+        return bookRepository.findByAuthorId(authorId);
+    }
+
+    @Override
     public boolean exists(String isbn) {
         return bookRepository.existsById(isbn);
     }
@@ -46,7 +51,7 @@ public class BookServiceImpl implements BookService {
 
         return bookRepository.findById(isbn).map(dbBook -> {
             Optional.ofNullable(bookEntity.getTitle()).ifPresent(dbBook::setTitle);
-//            Optional.ofNullable(bookEntity.getAuthorEntity()).ifPresent(dbBook::setAuthorEntity);
+            Optional.ofNullable(bookEntity.getAuthorId()).ifPresent(dbBook::setAuthorId);
 
             return bookRepository.save(dbBook);
         }).orElseThrow(() -> {

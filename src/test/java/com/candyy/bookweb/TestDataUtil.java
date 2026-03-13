@@ -20,11 +20,11 @@ public final class TestDataUtil {
                 .build();
     }
 
-    public static BookEntity createTestBook(final AuthorEntity authorEntity) {
+    public static BookEntity createTestBook(final Integer authorId) {
         return BookEntity.builder()
                 .isbn(bookIsbn)
                 .title(bookTitle)
-                .authorEntity(authorEntity)
+                .authorId(authorId)
                 .build();
     }
 }

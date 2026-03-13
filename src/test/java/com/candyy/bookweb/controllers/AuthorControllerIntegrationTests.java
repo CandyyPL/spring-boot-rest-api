@@ -2,7 +2,9 @@ package com.candyy.bookweb.controllers;
 
 import com.candyy.bookweb.TestDataUtil;
 import com.candyy.bookweb.entities.AuthorEntity;
+import com.candyy.bookweb.entities.BookEntity;
 import com.candyy.bookweb.repositories.AuthorRepository;
+import com.candyy.bookweb.repositories.BookRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,12 +31,19 @@ public class AuthorControllerIntegrationTests {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
     private final AuthorRepository authorRepository;
+    private BookRepository bookRepository;
 
     @Autowired
-    public AuthorControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, AuthorRepository authorRepository) {
+    public AuthorControllerIntegrationTests(
+            MockMvc mockMvc,
+            ObjectMapper objectMapper,
+            AuthorRepository authorRepository,
+            BookRepository bookRepository
+    ) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
     }
 
     @AfterEach
@@ -236,6 +245,21 @@ public class AuthorControllerIntegrationTests {
                 MockMvcRequestBuilders.delete("/authors/0")
         ).andExpect(
                 MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
+    public void deleteAuthorGivesCorrectResponseWhenAuthorHasAnyBooks() throws Exception {
+        AuthorEntity author = TestDataUtil.createTestAuthor();
+        AuthorEntity savedAuthor = authorRepository.save(author);
+
+        BookEntity book = TestDataUtil.createTestBook(savedAuthor.getId());
+        bookRepository.save(book);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.delete("/authors/" + savedAuthor.getId())
+        ).andExpect(
+                MockMvcResultMatchers.status().isConflict()
         );
     }
 }

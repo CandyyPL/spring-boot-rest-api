@@ -19,19 +19,19 @@ import java.util.Optional;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class AuthorRepositoryIntegrationTests {
-    private final AuthorRepository underTests;
+    private final AuthorRepository authorRepository;
 
     @Autowired
     public AuthorRepositoryIntegrationTests(AuthorRepository authorRepository) {
-        this.underTests = authorRepository;
+        this.authorRepository = authorRepository;
     }
 
     @Test
     public void authorCreatedAndRecalled() {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthor();
 
-        underTests.save(authorEntity);
-        Optional<AuthorEntity> result = underTests.findById(authorEntity.getId());
+        authorRepository.save(authorEntity);
+        Optional<AuthorEntity> result = authorRepository.findById(authorEntity.getId());
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(authorEntity);
     }
@@ -43,11 +43,11 @@ public class AuthorRepositoryIntegrationTests {
         for (var i = 0; i < 3; i++) {
             AuthorEntity authorEntity = TestDataUtil.createTestAuthor();
 
-            AuthorEntity savedAuthorEntity = underTests.save(authorEntity);
+            AuthorEntity savedAuthorEntity = authorRepository.save(authorEntity);
             authorEntities.add(savedAuthorEntity);
         }
 
-        Iterable<AuthorEntity> result = underTests.findAll();
+        Iterable<AuthorEntity> result = authorRepository.findAll();
 
         assertThat(result).hasSize(3);
         assertThat(result).containsExactlyElementsOf(authorEntities);
@@ -56,7 +56,7 @@ public class AuthorRepositoryIntegrationTests {
     @Test
     public void authorCreatedUpdatedAndRecalled() {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthor();
-        AuthorEntity savedAuthorEntity = underTests.save(authorEntity);
+        AuthorEntity savedAuthorEntity = authorRepository.save(authorEntity);
 
         final String newName = "Alice";
         final Integer newAge = 26;
@@ -64,9 +64,9 @@ public class AuthorRepositoryIntegrationTests {
         savedAuthorEntity.setName(newName);
         savedAuthorEntity.setAge(newAge);
 
-        savedAuthorEntity = underTests.save(savedAuthorEntity);
+        savedAuthorEntity = authorRepository.save(savedAuthorEntity);
 
-        Optional<AuthorEntity> result = underTests.findById(savedAuthorEntity.getId());
+        Optional<AuthorEntity> result = authorRepository.findById(savedAuthorEntity.getId());
 
         assertThat(result).isPresent();
         assertThat(result.get()).isEqualTo(savedAuthorEntity);
@@ -75,11 +75,11 @@ public class AuthorRepositoryIntegrationTests {
     @Test
     public void authorCreatedAndDeleted() {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthor();
-        AuthorEntity savedAuthorEntity = underTests.save(authorEntity);
+        AuthorEntity savedAuthorEntity = authorRepository.save(authorEntity);
 
-        underTests.deleteById(savedAuthorEntity.getId());
+        authorRepository.deleteById(savedAuthorEntity.getId());
 
-        Optional<AuthorEntity> result = underTests.findById(savedAuthorEntity.getId());
+        Optional<AuthorEntity> result = authorRepository.findById(savedAuthorEntity.getId());
 
         assertThat(result).isEmpty();
     }
@@ -89,19 +89,19 @@ public class AuthorRepositoryIntegrationTests {
         AuthorEntity authorEntityA = TestDataUtil.createTestAuthor();
         authorEntityA.setName("Robert");
         authorEntityA.setAge(20);
-        underTests.save(authorEntityA);
+        authorRepository.save(authorEntityA);
 
         AuthorEntity authorEntityB = TestDataUtil.createTestAuthor();
         authorEntityB.setName("William");
         authorEntityB.setAge(30);
-        underTests.save(authorEntityB);
+        authorRepository.save(authorEntityB);
 
         AuthorEntity authorEntityC = TestDataUtil.createTestAuthor();
         authorEntityC.setName("Leonardo");
         authorEntityC.setAge(40);
-        underTests.save(authorEntityC);
+        authorRepository.save(authorEntityC);
 
-        Iterable<AuthorEntity> result = underTests.ageLessThan(35);
+        Iterable<AuthorEntity> result = authorRepository.ageLessThan(35);
 
         assertThat(result).containsExactly(authorEntityA, authorEntityB);
     }
