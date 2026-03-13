@@ -1,7 +1,6 @@
 package com.candyy.bookweb.controllers;
 
 import com.candyy.bookweb.TestDataUtil;
-import com.candyy.bookweb.dto.AuthorDTO;
 import com.candyy.bookweb.entities.AuthorEntity;
 import com.candyy.bookweb.entities.BookEntity;
 import com.candyy.bookweb.repositories.BookRepository;
@@ -30,7 +29,7 @@ public class BookControllerIntegrationTests {
 
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public BookControllerIntegrationTests(MockMvc mockMvc, ObjectMapper objectMapper, BookRepository bookRepository) {

@@ -54,9 +54,8 @@ public class BookServiceImpl implements BookService {
             Optional.ofNullable(bookEntity.getAuthorId()).ifPresent(dbBook::setAuthorId);
 
             return bookRepository.save(dbBook);
-        }).orElseThrow(() -> {
-            throw new RuntimeException("Book does not exist! BookService.exist method should prevent this error from being thrown. Double check code.");
-        });
+        }).orElseThrow(() -> new RuntimeException("Book does not exist! BookService.exist method should prevent this error from being thrown. Double check code.")
+        );
     }
 
     @Override

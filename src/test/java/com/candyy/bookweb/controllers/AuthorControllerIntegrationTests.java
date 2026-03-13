@@ -31,7 +31,7 @@ public class AuthorControllerIntegrationTests {
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
     private final AuthorRepository authorRepository;
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
     public AuthorControllerIntegrationTests(

@@ -1,10 +1,8 @@
 package com.candyy.bookweb.services.impl;
 
-import com.candyy.bookweb.dto.AuthorDTO;
 import com.candyy.bookweb.entities.AuthorEntity;
 import com.candyy.bookweb.repositories.AuthorRepository;
 import com.candyy.bookweb.services.AuthorService;
-import com.candyy.bookweb.services.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,9 +52,7 @@ public class AuthorServiceImpl implements AuthorService {
             Optional.ofNullable(authorEntity.getAge()).ifPresent(dbAuthor::setAge);
 
             return authorRepository.save(dbAuthor);
-        }).orElseThrow(() -> {
-            throw new RuntimeException("Author does not exist! AuthorService.exist method should prevent this error from being thrown. Double check code.");
-        });
+        }).orElseThrow(() -> new RuntimeException("Author does not exist! AuthorService.exist method should prevent this error from being thrown. Double check code."));
     }
 
     @Override
