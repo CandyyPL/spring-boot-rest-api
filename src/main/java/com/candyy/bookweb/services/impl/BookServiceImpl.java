@@ -3,6 +3,8 @@ package com.candyy.bookweb.services.impl;
 import com.candyy.bookweb.entities.BookEntity;
 import com.candyy.bookweb.repositories.BookRepository;
 import com.candyy.bookweb.services.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,11 @@ public class BookServiceImpl implements BookService {
     public List<BookEntity> findAll() {
         Iterable<BookEntity> books = bookRepository.findAll();
         return StreamSupport.stream(books.spliterator(), false).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<BookEntity> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     @Override
