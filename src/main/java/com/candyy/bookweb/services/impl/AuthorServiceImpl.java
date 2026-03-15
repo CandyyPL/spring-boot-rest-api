@@ -3,6 +3,8 @@ package com.candyy.bookweb.services.impl;
 import com.candyy.bookweb.entities.AuthorEntity;
 import com.candyy.bookweb.repositories.AuthorRepository;
 import com.candyy.bookweb.services.AuthorService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +33,11 @@ public class AuthorServiceImpl implements AuthorService {
         return StreamSupport
                 .stream(authors.spliterator(), false)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<AuthorEntity> findAll(Pageable pageable) {
+        return authorRepository.findAll(pageable);
     }
 
     @Override

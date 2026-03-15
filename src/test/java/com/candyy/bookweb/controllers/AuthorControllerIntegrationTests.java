@@ -102,9 +102,9 @@ public class AuthorControllerIntegrationTests {
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/authors")
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].id").value(authors.get(0).getId())
+                MockMvcResultMatchers.jsonPath("$.content[0].id").value(authors.get(0).getId())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[2].id").value(authors.get(2).getId())
+                MockMvcResultMatchers.jsonPath("$.content[2].id").value(authors.get(2).getId())
         );
     }
 

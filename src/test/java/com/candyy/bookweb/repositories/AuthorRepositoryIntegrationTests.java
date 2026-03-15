@@ -47,7 +47,7 @@ public class AuthorRepositoryIntegrationTests {
             authorEntities.add(savedAuthorEntity);
         }
 
-        Iterable<AuthorEntity> result = authorRepository.findAll();
+        List<AuthorEntity> result = authorRepository.findAll();
 
         assertThat(result).hasSize(3);
         assertThat(result).containsExactlyElementsOf(authorEntities);
@@ -101,7 +101,7 @@ public class AuthorRepositoryIntegrationTests {
         authorEntityC.setAge(40);
         authorRepository.save(authorEntityC);
 
-        Iterable<AuthorEntity> result = authorRepository.ageLessThan(35);
+        List<AuthorEntity> result = authorRepository.ageLessThan(35);
 
         assertThat(result).containsExactly(authorEntityA, authorEntityB);
     }

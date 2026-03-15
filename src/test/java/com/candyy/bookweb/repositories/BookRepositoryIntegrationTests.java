@@ -53,7 +53,7 @@ public class BookRepositoryIntegrationTests {
             books.add(savedBookEntity);
         }
 
-        Iterable<BookEntity> result = bookRepository.findAll();
+        List<BookEntity> result = bookRepository.findAll();
 
         assertThat(result).hasSize(3);
         assertThat(result).containsExactlyElementsOf(books);

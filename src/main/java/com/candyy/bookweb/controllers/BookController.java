@@ -6,6 +6,7 @@ import com.candyy.bookweb.mappers.Mapper;
 import com.candyy.bookweb.services.BookService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,9 +47,9 @@ public class BookController {
     }
 
     @GetMapping(path = "/books")
-    public Page<BookDTO> getAllBooks(Pageable pageable) {
+    public PagedModel<BookDTO> getAllBooks(Pageable pageable) {
         Page<BookEntity> books = bookService.findAll(pageable);
-        return books.map(bookMapper::mapTo);
+        return new PagedModel<>(books.map(bookMapper::mapTo));
     }
 
     @GetMapping(path = "/books/{isbn}")

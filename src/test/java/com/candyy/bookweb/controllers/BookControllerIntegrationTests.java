@@ -105,10 +105,10 @@ public class BookControllerIntegrationTests {
                 MockMvcRequestBuilders.get("/books")
                         .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[0].isbn")
+                MockMvcResultMatchers.jsonPath("$.content[0].isbn")
                         .value(books.get(0).getIsbn())
         ).andExpect(
-                MockMvcResultMatchers.jsonPath("$[2].isbn")
+                MockMvcResultMatchers.jsonPath("$.content[2].isbn")
                         .value(books.get(2).getIsbn())
         );
     }

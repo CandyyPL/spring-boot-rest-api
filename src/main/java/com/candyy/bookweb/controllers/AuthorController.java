@@ -6,6 +6,9 @@ import com.candyy.bookweb.entities.BookEntity;
 import com.candyy.bookweb.mappers.Mapper;
 import com.candyy.bookweb.services.AuthorService;
 import com.candyy.bookweb.services.BookService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +43,9 @@ public class AuthorController {
     }
 
     @GetMapping(path = "/authors")
-    public List<AuthorDTO> getAllAuthors() {
-        List<AuthorEntity> authors = authorService.findAll();
-        return authors.stream()
-                .map(authorMapper::mapTo)
-                .collect(Collectors.toList());
+    public PagedModel<AuthorDTO> getAllAuthors(Pageable pageable) {
+        Page<AuthorEntity> authors = authorService.findAll(pageable);
+        return new PagedModel<>(authors.map(authorMapper::mapTo));
     }
 
     @GetMapping(path = "/authors/{id}")

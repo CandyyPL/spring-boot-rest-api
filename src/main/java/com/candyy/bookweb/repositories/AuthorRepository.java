@@ -1,8 +1,10 @@
 package com.candyy.bookweb.repositories;
 
 import com.candyy.bookweb.entities.AuthorEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AuthorRepository extends CrudRepository<AuthorEntity, Integer> {
-    Iterable<AuthorEntity> ageLessThan(int age);
+import java.util.List;
+
+public interface AuthorRepository extends JpaRepository<AuthorEntity, Integer> {
+    List<AuthorEntity> ageLessThan(int age);
 }
